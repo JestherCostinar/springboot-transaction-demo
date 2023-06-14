@@ -16,11 +16,11 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String card_name;
-    private String card_number;
+    private String cardName;
+    private String cardNumber;
     private int cvc;
-    private int expiry_month;
-    private int expiry_year;
-    private Long order_id;
+    private int expiryMonth;
+    private int expiryYear;
+    private Long orderId;
     private String type;
 }

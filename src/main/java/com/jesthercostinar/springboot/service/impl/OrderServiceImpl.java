@@ -9,6 +9,7 @@ import com.jesthercostinar.springboot.repository.OrderRepository;
 import com.jesthercostinar.springboot.repository.PaymentRepository;
 import com.jesthercostinar.springboot.service.OrderService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -23,7 +24,9 @@ public class OrderServiceImpl implements OrderService {
         this.paymentRepository = paymentRepository;
     }
     @Override
+    @Transactional
     public OrderResponse placeOrder(OrderRequest orderRequest) {
+
         Order order = orderRequest.getOrder();
         order.setStatus("INPROGRESS");
         order.setOrderTrackingNumber(UUID.randomUUID().toString());
@@ -34,7 +37,8 @@ public class OrderServiceImpl implements OrderService {
         if(!payment.getType().equals("DEBIT")) {
             throw new PaymentException("Payment card type is not supported");
         }
-        payment.setOrder_id(order.getId());
+
+        payment.setOrderId(order.getId());
         paymentRepository.save(payment);
 
         OrderResponse orderResponse = new OrderResponse();
